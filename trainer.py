@@ -49,10 +49,7 @@ test_data, rng = getdata.get_test(flatten = flatten, rescale = rescale, \
 callback = [TensorBoard(log_dir='./logs/run5',write_graph=False)]
 
 
-'''# TRAIN THE AUTOENCODER NORMALLY
-net.train(train_x,train_y, epochs = 8, verbose = 1,\
-            loss = 'mean_squared_error', optimizer= 'adadelta',\
-            batch_size = 16, callback = callback)'''
+
 
 # TRAIN THE AUTOENCODER ALTERNATINGLY
 losses = {True: 'mean_squared_error', False: 'mean_absolute_error'}
@@ -62,6 +59,11 @@ for _ in range(8):
         loss = losses[loss_], optimizer= 'adadelta', batch_size = 16,\
         callback = callback)
     loss_ = not loss_
+
+# TRAIN THE AUTOENCODER NORMALLY
+net.train(train_x,train_y, epochs = 8, verbose = 1,\
+            loss = 'mean_squared_error', optimizer= 'adadelta',\
+            batch_size = 16, callback = callback)
 
 
 # SAVE MODEL
