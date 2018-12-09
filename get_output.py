@@ -27,14 +27,14 @@ flatten = False      # Get 1D data
 rescale = True       #  Rescale 'RGB' values from [0,255] to [1,0]
 denoise_only = False # Reshape target values from 128x128 to 64x64
 test_data, rng = getdata.get_test(flatten = flatten, rescale = rescale,\
-                              denoise_only = denoise_only, amount = 0)
+                              denoise_only = denoise_only, amount = 2)
 
 # save data
 for n, index in enumerate(rng):
     test_output = net.predict(np.array([test_data[n], test_data[n]]))[0]
     test_output = (1-test_output)*255
     path = os.getcwd() + '/xray_images/test_images_128x128/test_' + ('00000' + str(index))[-5:] + '.png'
-    cv2.imwrite(path,test_output)
+    cv2.imwrite(path,test_output,[cv2.IMWRITE_PNG_COMPRESSION, 0])
     if n%200 == 0:
         print("finished processing {} images!".format(n))
         
