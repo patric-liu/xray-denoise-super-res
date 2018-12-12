@@ -25,9 +25,9 @@ net.network.load_weights(os.getcwd() + '/model_weights/'+ model_name +'_weights.
 
 ############ CREATE AND TRAIN NEW MODEL #####################
 # define model
-filters_64  = [(64,64,1),(32,3),(32,3),(32,3)] # [(INPUT_SHAPE),(num_filters, kernel_size)...]
+filters_64  = [(64,64,1),(32,3),(32,3),(32,3),(32,3),(32,3)] # [(INPUT_SHAPE),(num_filters, kernel_size)...]
 deconv      = (32,3) # (num_filters, kernel_size)
-filters_128 = [(32,3),(32,3),(32,3),(1,3)] #[(num_filters, kernel_size)...]
+filters_128 = [(32,3),(32,3),(32,3),(32,3),(32,3),(1,3)] #[(num_filters, kernel_size)...]
 
 net = network.Network(filters_64, deconv, filters_128, test = 4)
 net.network.summary()
@@ -62,7 +62,7 @@ net.train(train_x,train_y, epochs = 8, verbose = 1,\
 
 
 # SAVE MODEL
-model_name = 'model1' ### MAKE SURE THIS IS SAVING TO THE NAME YOU WANT (will overwrite)
+model_name = 'model2' ### MAKE SURE THIS IS SAVING TO THE NAME YOU WANT (will overwrite)
 
 # save weights
 save_path = os.getcwd() + '/model_weights/'+ model_name +'_weights.h5'

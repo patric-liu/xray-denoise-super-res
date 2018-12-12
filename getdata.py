@@ -49,6 +49,8 @@ def get_training(amount, flatten = False, rescale = True, denoise_only = False):
 def get_test(amount, flatten = False, rescale = True, denoise_only = False, sample = 0):
 	if amount == 0:
 		amount = test_size
+
+	print(amount)
 	rng = list(range(sample + 1, sample + amount + 1))
 	data_x = None
 	if not flatten:

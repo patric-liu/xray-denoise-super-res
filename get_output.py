@@ -27,7 +27,7 @@ flatten = False      # Get 1D data
 rescale = True       #  Rescale 'RGB' values from [0,255] to [1,0]
 denoise_only = False # Reshape target values from 128x128 to 64x64
 test_data, rng = getdata.get_test(flatten = flatten, rescale = rescale,\
-                              denoise_only = denoise_only, amount = 2)
+                              denoise_only = denoise_only, amount = 3999)
 
 # save data
 for n, index in enumerate(rng):
