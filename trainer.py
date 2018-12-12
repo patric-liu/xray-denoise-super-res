@@ -37,7 +37,7 @@ net.network.summary()
 flatten = False      # Get 1D data
 rescale = True       #  Rescale 'RGB' values from [0,255] to [1,0]
 denoise_only = False # Reshape target values from 128x128 to 64x64
-amount = 100        # Amount of data to load, 0 gives loads all data
+amount = 0        # Amount of data to load, 0 gives loads all data
 train_x, train_y = getdata.get_training(flatten = flatten, rescale = rescale, \
     amount = amount, denoise_only = denoise_only)
 test_data, rng = getdata.get_test(flatten = flatten, rescale = rescale, \
