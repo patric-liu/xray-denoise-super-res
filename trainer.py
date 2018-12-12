@@ -23,7 +23,6 @@ net.network.load_weights(os.getcwd() + '/model_weights/'+ model_name +'_weights.
 #############################################################
 '''
 
-
 ############ CREATE AND TRAIN NEW MODEL #####################
 # define model
 filters_64  = [(64,64,1),(32,3),(32,3),(32,3)] # [(INPUT_SHAPE),(num_filters, kernel_size)...]
@@ -44,12 +43,8 @@ train_x, train_y = getdata.get_training(flatten = flatten, rescale = rescale, \
 test_data, rng = getdata.get_test(flatten = flatten, rescale = rescale, \
     denoise_only = denoise_only, amount = amount if amount < 4000 else 3999) 
 
-
 # DEFINE CALLBACKS
 callback = [TensorBoard(log_dir='./logs/run5',write_graph=False)]
-
-
-
 
 # TRAIN THE AUTOENCODER ALTERNATINGLY
 losses = {True: 'mean_squared_error', False: 'mean_absolute_error'}
