@@ -10,7 +10,7 @@ from keras.models import model_from_json, Model
 from keras.callbacks import TensorBoard
 
 # Load Model
-model_name = 'model1'
+model_name = 'model3'
 
 # model reconstruction from JSON
 net = network.Network(None, None, None, test = 0)
