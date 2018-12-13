@@ -9,10 +9,10 @@ import os
 from keras.models import model_from_json, Model
 from keras.callbacks import TensorBoard
 
-'''
+
 ############ LOAD UP PREVIOUS MODEL #########################
 # Load Model
-model_name = 'deepresdeconv4.2'
+model_name = 'model2'
 
 # model reconstruction from JSON
 net = network.Network(None, None, None, test = 0)
@@ -20,18 +20,20 @@ with open(os.getcwd() + '/model_weights/'+ model_name +'_architecture.json', 'r'
     net.network = model_from_json(f.read())
 # load weights into the model
 net.network.load_weights(os.getcwd() + '/model_weights/'+ model_name +'_weights.h5')
+net.network.summary()
 #############################################################
-'''
 
+'''
 ############ CREATE AND TRAIN NEW MODEL #####################
 # define model
-filters_64  = [(64,64,1),(32,3),(32,3),(32,3),(32,3),(32,3)] # [(INPUT_SHAPE),(num_filters, kernel_size)...]
-deconv      = (32,3) # (num_filters, kernel_size)
-filters_128 = [(32,3),(32,3),(32,3),(32,3),(32,3),(1,3)] #[(num_filters, kernel_size)...]
+filters_64  = [(64,64,1),(32,5),(32,5),(32,5),(32,5),(32,5),(32,5)] # [(INPUT_SHAPE),(num_filters, kernel_size)...]
+deconv      = (32,5) # (num_filters, kernel_size)
+filters_128 = [(32,5),(32,5),(32,5),(32,5),(32,5),(32,5),(1,5)] #[(num_filters, kernel_size)...]
 
 net = network.Network(filters_64, deconv, filters_128, test = 4)
 net.network.summary()
 #############################################################
+'''
 
 # load data
 flatten = False      # Get 1D data
@@ -49,7 +51,7 @@ callback = [TensorBoard(log_dir='./logs/run5',write_graph=False)]
 # TRAIN THE AUTOENCODER ALTERNATINGLY
 losses = {True: 'mean_squared_error', False: 'mean_absolute_error'}
 loss_ = False
-for _ in range(8):
+for _ in range(4):
     net.train(train_x,train_y, epochs = 4, verbose = 1,\
         loss = losses[loss_], optimizer= 'adadelta', batch_size = 16,\
         callback = callback)
@@ -62,7 +64,7 @@ net.train(train_x,train_y, epochs = 8, verbose = 1,\
 
 
 # SAVE MODEL
-model_name = 'model2' ### MAKE SURE THIS IS SAVING TO THE NAME YOU WANT (will overwrite)
+model_name = 'model3' ### MAKE SURE THIS IS SAVING TO THE NAME YOU WANT (will overwrite)
 
 # save weights
 save_path = os.getcwd() + '/model_weights/'+ model_name +'_weights.h5'
