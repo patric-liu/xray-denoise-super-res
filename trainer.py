@@ -28,7 +28,7 @@ net.network.summary()
 # define model
 filters_64  = [(64,64,1),(32,5),(32,5),(32,5),(32,5),(32,5),(32,5)] # [(INPUT_SHAPE),(num_filters, kernel_size)...]
 deconv      = (64,5) # (num_filters, kernel_size)
-filters_128 = [(64,5),(64,5),(64,5),(64,5),(64,5),(64,5),(1,5)] #[(num_filters, kernel_size)...]
+filters_128 = [(32,5),(32,5),(32,5),(32,5),(32,5),(32,5),(1,5)] #[(num_filters, kernel_size)...]
 
 net = network.Network(filters_64, deconv, filters_128, test = 4)
 net.network.summary()
