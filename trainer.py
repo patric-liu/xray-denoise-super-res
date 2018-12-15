@@ -35,6 +35,9 @@ net.network.summary()
 #############################################################
 '''
 
+# OUTPUT MODEL NAME
+model_name = 'hugenet3'
+
 # load data
 flatten = False      # Get 1D data
 rescale = True       #  Rescale 'RGB' values from [0,255] to [1,0]
@@ -51,31 +54,28 @@ callback = [TensorBoard(log_dir='./logs/run5',write_graph=False)]
 # TRAIN THE AUTOENCODER ALTERNATINGLY
 losses = {True: 'mean_squared_error', False: 'mean_absolute_error'}
 loss_ = False
-for _ in range(4):
+for _ in range(0):
     net.train(train_x,train_y, epochs = 4, verbose = 1,\
         loss = losses[loss_], optimizer= 'adadelta', batch_size = 16,\
         callback = callback)
     loss_ = not loss_
 
 # TRAIN THE AUTOENCODER NORMALLY
-net.train(train_x,train_y, epochs = 8, verbose = 1,\
+for _ in range(8):
+    net.train(train_x,train_y, epochs = 1, verbose = 1,\
             loss = 'mean_squared_error', optimizer= 'adadelta',\
             batch_size = 16, callback = callback)
+    save(model_name)
 
 
 # SAVE MODEL
-<<<<<<< HEAD
-model_name = 'hugenet3' ### MAKE SURE THIS IS SAVING TO THE NAME YOU WANT (will overwrite)
-=======
-model_name = 'hugenet2' ### MAKE SURE THIS IS SAVING TO THE NAME YOU WANT (will overwrite)
->>>>>>> 13dee5c635bdc0ac6404bf9a60c696b9e8f9294c
-
-# save weights
-save_path = os.getcwd() + '/model_weights/'+ model_name +'_weights.h5'
-net.network.save_weights(save_path)
-# save architecture in JSON
-with open(os.getcwd() + '/model_weights/'+ model_name +'_architecture.json', 'w') as f:
-    f.write(net.network.to_json())
+def save(name):
+    # save weights
+    save_path = os.getcwd() + '/model_weights/'+ name +'_weights.h5'
+    net.network.save_weights(save_path)
+    # save architecture in JSON
+    with open(os.getcwd() + '/model_weights/'+ name +'_architecture.json', 'w') as f:
+        f.write(net.network.to_json())
 
 
 
