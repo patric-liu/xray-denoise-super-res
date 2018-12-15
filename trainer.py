@@ -37,6 +37,14 @@ net.network.summary()
 
 # OUTPUT MODEL NAME
 model_name = 'hugenet3'
+# SAVE MODEL FUNCTION
+def save(name):
+    # save weights
+    save_path = os.getcwd() + '/model_weights/'+ name +'_weights.h5'
+    net.network.save_weights(save_path)
+    # save architecture in JSON
+    with open(os.getcwd() + '/model_weights/'+ name +'_architecture.json', 'w') as f:
+        f.write(net.network.to_json())
 
 # load data
 flatten = False      # Get 1D data
@@ -66,16 +74,6 @@ for _ in range(8):
             loss = 'mean_squared_error', optimizer= 'adadelta',\
             batch_size = 16, callback = callback)
     save(model_name)
-
-
-# SAVE MODEL
-def save(name):
-    # save weights
-    save_path = os.getcwd() + '/model_weights/'+ name +'_weights.h5'
-    net.network.save_weights(save_path)
-    # save architecture in JSON
-    with open(os.getcwd() + '/model_weights/'+ name +'_architecture.json', 'w') as f:
-        f.write(net.network.to_json())
 
 
 
