@@ -64,7 +64,11 @@ net.train(train_x,train_y, epochs = 8, verbose = 1,\
 
 
 # SAVE MODEL
+<<<<<<< HEAD
 model_name = 'hugenet3' ### MAKE SURE THIS IS SAVING TO THE NAME YOU WANT (will overwrite)
+=======
+model_name = 'hugenet2' ### MAKE SURE THIS IS SAVING TO THE NAME YOU WANT (will overwrite)
+>>>>>>> 13dee5c635bdc0ac6404bf9a60c696b9e8f9294c
 
 # save weights
 save_path = os.getcwd() + '/model_weights/'+ model_name +'_weights.h5'
