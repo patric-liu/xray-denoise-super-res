@@ -20,7 +20,7 @@ test_data, rng = getdata.get_test(flatten = flatten, rescale = rescale, denoise_
 print('loaded data')
 
 # Load Model
-model_name = 'deconv3'
+model_name = 'hugenet3'
 # model reconstruction from JSON
 net = network.Network(None, None, None, test = 0)
 with open(os.getcwd() + '/model_weights/'+ model_name +'_architecture.json', 'r') as f:
@@ -38,12 +38,13 @@ mean_error = np.squeeze(np.mean(error,(1,2)))
 print('errors computed')
 
 # GET ERROR INDICES
-percentages = [0.25,0.1,0.05,0.01]
-num = []
+percentages = [0.25,0.1,0.05,0.01,0.001,0.0001]
 ind = []
+amount = amount if amount != 0 else 16000
 for percent in percentages:
-	num.append(int(percent * amount if amount !=0 else 16000))
-	ind.append(np.argpartition(mean_error, -num[-1])[-num[-1]:])
+	m = int(percent * amount)
+	num = m if m != 0 else 1
+	ind.append(np.argpartition(mean_error, -num)[-num:])
 
 for i in ind:
 	print(np.shape(i))
