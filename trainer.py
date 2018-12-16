@@ -12,7 +12,7 @@ from keras.callbacks import TensorBoard
 
 ############ LOAD UP PREVIOUS MODEL #########################
 # Load Model
-model_name = 'hugenet2'
+model_name = 'hugenet3'
 
 # model reconstruction from JSON
 net = network.Network(None, None, None, test = 0)
