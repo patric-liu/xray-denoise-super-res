@@ -10,7 +10,7 @@ from keras.models import model_from_json, Model
 from keras.callbacks import TensorBoard
 
 # Load Model
-model_name = 'hugenet3'
+model_name = 'hugenet4'
 
 # model reconstruction from JSON
 net = network.Network(None, None, None, test = 0)
