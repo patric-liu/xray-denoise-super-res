@@ -14,13 +14,13 @@ import pickle
 flatten = False      # Get 1D data
 rescale = True       #  Rescale 'RGB' values from [0,255] to [1,0]
 denoise_only = False # Reshape target values from 128x128 to 64x64
-amount = 0        # Amount of data to load, 0 gives loads all data
+amount = 10        # Amount of data to load, 0 gives loads all data
 train_x, train_y = getdata.get_training(flatten = flatten, rescale = rescale, amount = amount, denoise_only = denoise_only)
 test_data, rng = getdata.get_test(flatten = flatten, rescale = rescale, denoise_only = denoise_only, amount = amount if amount < 4000 else 3999) 
 print('loaded data')
 
 # Load Model
-model_name = 'hugenet3'
+model_name = 'deconv1'
 # model reconstruction from JSON
 net = network.Network(None, None, None, test = 0)
 with open(os.getcwd() + '/model_weights/'+ model_name +'_architecture.json', 'r') as f:
@@ -51,6 +51,9 @@ for i in ind:
 
 with open('error_indices.pkl', 'wb') as output:
     pickle.dump(ind, output, pickle.HIGHEST_PROTOCOL)
+
+with open('mean_error.pkl', 'wb') as output:
+    pickle.dump(mean_error, output, pickle.HIGHEST_PROTOCOL)
 
 '''del ind
 

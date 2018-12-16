@@ -50,7 +50,6 @@ def get_test(amount, flatten = False, rescale = True, denoise_only = False, samp
 	if amount == 0:
 		amount = test_size
 
-	print(amount)
 	rng = list(range(sample + 1, sample + amount + 1))
 	data_x = None
 	if not flatten:
