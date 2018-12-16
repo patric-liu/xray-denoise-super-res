@@ -14,7 +14,7 @@ import pickle
 flatten = False      # Get 1D data
 rescale = True       #  Rescale 'RGB' values from [0,255] to [1,0]
 denoise_only = False # Reshape target values from 128x128 to 64x64
-amount = 10        # Amount of data to load, 0 gives loads all data
+amount = 0        # Amount of data to load, 0 gives loads all data
 train_x, train_y = getdata.get_training(flatten = flatten, rescale = rescale, amount = amount, denoise_only = denoise_only)
 test_data, rng = getdata.get_test(flatten = flatten, rescale = rescale, denoise_only = denoise_only, amount = amount if amount < 4000 else 3999) 
 print('loaded data')
@@ -33,6 +33,7 @@ net.network.summary()
 y_true = K.variable(train_y)
 predictions = net.predict(train_x)
 y_pred = K.variable(predictions)
+print('predictions made')
 error = np.expand_dims(K.eval(loss(y_true, y_pred)), axis=3)
 mean_error = np.squeeze(np.mean(error,(1,2)))
 print('errors computed')
