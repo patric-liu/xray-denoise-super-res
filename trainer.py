@@ -8,11 +8,11 @@ import cv2
 import os
 from keras.models import model_from_json, Model
 from keras.callbacks import TensorBoard
-
+from keras import backend as K
 
 ############ LOAD UP PREVIOUS MODEL #########################
 # Load Model
-model_name = 'hugenet4'
+model_name = 'hugenet3'
 
 # model reconstruction from JSON
 net = network.Network(None, None, None, test = 0)
@@ -36,7 +36,7 @@ net.network.summary()
 '''
 
 # OUTPUT MODEL NAME
-model_name = 'hugenet4'
+model_name = 'hugenet3RMSE'
 # SAVE MODEL FUNCTION
 def save(name):
     # save weights
@@ -59,8 +59,11 @@ test_data, rng = getdata.get_test(flatten = flatten, rescale = rescale, \
 # DEFINE CALLBACKS
 callback = [TensorBoard(log_dir='./logs/run5',write_graph=False)]
 
+def RMSError(y_true, y_pred):
+	return K.sqrt(K.mean(K.square(y_pred - y_true)))
+
 # TRAIN THE AUTOENCODER ALTERNATINGLY
-losses = {True: 'mean_squared_error', False: 'mean_absolute_error'}
+losses = {True: RMSError, False: 'mean_absolute_error'}
 loss_ = False
 for _ in range(0):
     net.train(train_x,train_y, epochs = 2, verbose = 1,\
@@ -72,7 +75,7 @@ for _ in range(0):
 # TRAIN THE AUTOENCODER NORMALLY
 for _ in range(40):
     net.train(train_x,train_y, epochs = 1, verbose = 1,\
-            loss = 'mean_squared_error', optimizer= 'adadelta',\
+            loss = RMSError, optimizer= 'adadelta',\
             batch_size = 16, callback = callback)
     save(model_name)
 
