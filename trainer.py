@@ -19,7 +19,7 @@ net = network.Network(None, None, None, test = 0)
 with open(os.getcwd() + '/model_weights/'+ model_name +'_architecture.json', 'r') as f:
     net.network = model_from_json(f.read())
 # load weights into the model
-net.network.load_weights(os.getcwd() + '/model_weights/'+ model_name +'_weights.h5')
+# net.network.load_weights(os.getcwd() + '/model_weights/'+ model_name +'_weights.h5')
 net.network.summary()
 #############################################################
 '''
@@ -28,15 +28,14 @@ net.network.summary()
 # define model
 filters_64  = [(64,64,1),(32,5),(32,5),(32,5),(32,5),(32,5),(32,5)] # [(INPUT_SHAPE),(num_filters, kernel_size)...]
 deconv      = (64,5) # (num_filters, kernel_size)
-filters_128 = [(64,5),(64,5),(64,5),(64,5),(64,3),(64,3),(1,3)] #[(num_filters, kernel_size)...]
+filters_128 = [(32,5),(32,5),(32,5),(32,5),(32,3),(32,3),(1,3)] #[(num_filters, kernel_size)...]
 
 net = network.Network(filters_64, deconv, filters_128, test = 4)
 net.network.summary()
 #############################################################
 '''
-
 # OUTPUT MODEL NAME
-model_name = 'hugenet3RMSE'
+model_name = 'hugenet3RMSE_fresh'
 # SAVE MODEL FUNCTION
 def save(name):
     # save weights
