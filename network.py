@@ -90,7 +90,7 @@ class Network(object):
 		self.end = self.matrix(self.start)
 		self.network = Model(self.start,self.end)
 
-	def train(self, x_train,y_train, callback, epochs=10, batch_size=100, verbose=2, optimizer = 'adadelta', loss = 'mean_squared_error'):
+	def train(self, x_train,y_train, callback, val_split = 0.1, epochs=10, batch_size=100, verbose=2, optimizer = 'adadelta', loss = 'mean_squared_error'):
 		# x_train is inputs
 		# x_test is outputs
 		self.network.compile(optimizer=optimizer, loss=loss)
@@ -98,6 +98,7 @@ class Network(object):
 						epochs = epochs,
 						batch_size = batch_size,
 						shuffle=True,
+						validation_split = val_split,
 						verbose = verbose,
 						callbacks = callback
 						)
