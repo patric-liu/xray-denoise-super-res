@@ -66,20 +66,17 @@ def testerror(y_true, y_pred):
 
 # TRAIN THE AUTOENCODER ALTERNATINGLY
 losses = {True: RMSError, False: 'mean_absolute_error'}
-loss_ = False
-for _ in range(0):
-    net.train(train_x,train_y, epochs = 2, verbose = 1,\
+loss_ = True
+for _ in range(2):
+    net.train(train_x,train_y, epochs = 1, verbose = 1,\
         loss = losses[loss_], optimizer= 'adadelta', batch_size = 16,\
         callback = callback)
     loss_ = not loss_
     save(model_name)
 
 # TRAIN THE AUTOENCODER NORMALLY
-for _ in range(40):
+for _ in range(1):
     net.train(train_x,train_y, epochs = 1, verbose = 1,\
             loss = RMSError, optimizer= 'adadelta',\
             batch_size = 16, callback = callback)
     save(model_name)
-
-
-
