@@ -19,7 +19,7 @@ net = network.Network(None, None, None, test = 0)
 with open(os.getcwd() + '/model_weights/'+ model_name +'_architecture.json', 'r') as f:
     net.network = model_from_json(f.read())
 # load weights into the model
-# net.network.load_weights(os.getcwd() + '/model_weights/'+ model_name +'_weights.h5')
+net.network.load_weights(os.getcwd() + '/model_weights/'+ model_name +'_weights.h5')
 net.network.summary()
 #############################################################
 '''
@@ -60,6 +60,9 @@ callback = [TensorBoard(log_dir='./logs/run5',write_graph=False)]
 
 def RMSError(y_true, y_pred):
 	return K.sqrt(K.mean(K.square(y_pred - y_true)))
+
+def testerror(y_true, y_pred):
+	return K.mean(K.square(y_pred - y_true))
 
 # TRAIN THE AUTOENCODER ALTERNATINGLY
 losses = {True: RMSError, False: 'mean_absolute_error'}
