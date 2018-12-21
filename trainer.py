@@ -12,7 +12,7 @@ from keras import backend as K
 
 ############ LOAD UP PREVIOUS MODEL #########################
 # Load Model
-model_name = 'hugenet3'
+model_name = 'thechosenone'
 
 # model reconstruction from JSON
 net = network.Network(None, None, None, test = 0)
@@ -26,16 +26,18 @@ net.network.summary()
 
 ############ CREATE AND TRAIN NEW MODEL #####################
 # define model
-filters_64  = [(64,64,1),(32,5),(32,5),(32,5),(32,5),(32,5),(32,5)] # [(INPUT_SHAPE),(num_filters, kernel_size)...]
-deconv      = (64,5) # (num_filters, kernel_size)
-filters_128 = [(32,5),(32,5),(32,5),(32,5),(32,3),(32,3),(1,3)] #[(num_filters, kernel_size)...]
+filters_64  = [(64,64,1),(32,3),(32,3),(32,3),(32,3),(32,3)] # [(INPUT_SHAPE),(num_filters, kernel_size)...]
+deconv      = (32,3) # (num_filters, kernel_size)
+filters_128 = [(32,3),(32,3),(32,3),(32,3),(32,3),(32,3),(1,3)] #[(num_filters, kernel_size)...]
 
 net = network.Network(filters_64, deconv, filters_128, test = 4)
 net.network.summary()
 #############################################################
 '''
+
+
 # OUTPUT MODEL NAME
-model_name = 'hugenet3RMSE_fresh'
+model_name = 'thechosenone.1'
 # SAVE MODEL FUNCTION
 def save(name):
     # save weights
@@ -67,7 +69,7 @@ def testerror(y_true, y_pred):
 # TRAIN THE AUTOENCODER ALTERNATINGLY
 losses = {True: RMSError, False: 'mean_absolute_error'}
 loss_ = True
-for _ in range(2):
+for _ in range(0):
     net.train(train_x,train_y, epochs = 1, verbose = 1,\
         loss = losses[loss_], optimizer= 'adadelta', batch_size = 16,\
         callback = callback)
@@ -75,8 +77,8 @@ for _ in range(2):
     save(model_name)
 
 # TRAIN THE AUTOENCODER NORMALLY
-for _ in range(1):
-    net.train(train_x,train_y, epochs = 1, verbose = 1,\
+for _ in range(10):
+	net.train(train_x,train_y, epochs = 1, verbose = 1,\
             loss = RMSError, optimizer= 'adadelta',\
-            batch_size = 16, callback = callback)
-    save(model_name)
+            batch_size = 32, callback = callback)
+	save(model_name)
