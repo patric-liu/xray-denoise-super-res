@@ -10,6 +10,7 @@ from keras.models import model_from_json, Model
 from keras.callbacks import TensorBoard
 from keras import backend as K
 
+'''
 ############ LOAD UP PREVIOUS MODEL #########################
 # Load Model
 model_name = 'hugenet3'
@@ -26,14 +27,16 @@ net.network.summary()
 
 ############ CREATE AND TRAIN NEW MODEL #####################
 # define model
-filters_64  = [(64,64,1),(32,5),(32,5),(32,5),(32,5),(32,5),(32,5)] # [(INPUT_SHAPE),(num_filters, kernel_size)...]
-deconv      = (64,5) # (num_filters, kernel_size)
-filters_128 = [(32,5),(32,5),(32,5),(32,5),(32,3),(32,3),(1,3)] #[(num_filters, kernel_size)...]
+filters_64  = [(64,64,1),(32,3),(32,3),(32,3),(32,3),(32,3)] # [(INPUT_SHAPE),(num_filters, kernel_size)...]
+deconv      = (32,3) # (num_filters, kernel_size)
+filters_128 = [(32,3),(32,3),(32,3),(32,3),(32,3),(32,3),(1,3)] #[(num_filters, kernel_size)...]
 
 net = network.Network(filters_64, deconv, filters_128, test = 4)
 net.network.summary()
 #############################################################
-'''
+
+
+
 # OUTPUT MODEL NAME
 model_name = 'hugenet3RMSE_test'
 # SAVE MODEL FUNCTION
@@ -71,25 +74,25 @@ loss_ = False
 net.network.compile(optimizer = 'adadelta', loss = RMSError)
 print('RMSE', net.network.evaluate(val_x, val_y, verbose = 1, ))
 
-for _ in range(4):
+for _ in range(0):
     net.train(train_x,train_y, epochs = 2, verbose = 1,\
         loss = losses[loss_], optimizer= 'adadelta', batch_size = 16,\
         callback = callback, val_split = 0)
     net.network.compile(optimizer = 'adadelta', loss = RMSError)
-    print('RMSE', net.network.evaluate(val_x, val_y, verbose = 1, ))
+    print('RMSE validation error: ', net.network.evaluate(val_x, val_y, verbose = 1, ))
 
 
     loss_ = not loss_
     save(model_name)
 
 # TRAIN THE AUTOENCODER NORMALLY
-for _ in range(8):
+for _ in range(10):
     net.train(train_x,train_y, epochs = 1, verbose = 1,\
             loss = RMSError, optimizer= 'adadelta',\
-            batch_size = 16, callback = callback)
+            batch_size = 32, callback = callback)
 
     net.network.compile(optimizer = 'adadelta', loss = RMSError)
-    print('RMSE', net.network.evaluate(val_x, val_y, verbose = 1, ))
+    print('RMSE validation error: ', net.network.evaluate(val_x, val_y, verbose = 1, ))
 
     save(model_name)
 
