@@ -1,7 +1,7 @@
 import getdata
 import pickle
 import numpy as np 
-import network
+import network1
 import matplotlib.pyplot as plt
 import scipy.ndimage
 import cv2
@@ -31,7 +31,7 @@ filters_64  = [(64,64,1),(32,3),(32,3),(32,3),(32,3),(32,3)] # [(INPUT_SHAPE),(n
 deconv      = (32,3) # (num_filters, kernel_size)
 filters_128 = [(32,3),(32,3),(32,3),(32,3),(32,3),(32,3),(1,3)] #[(num_filters, kernel_size)...]
 
-net = network.Network(filters_64, deconv, filters_128, test = 4)
+net = network1.Network(filters_64, deconv, filters_128, test = 4)
 net.network.summary()
 #############################################################
 
@@ -72,7 +72,7 @@ losses = {True: RMSError, False: 'mean_squared_error'}
 loss_ = False
 
 net.network.compile(optimizer = 'adadelta', loss = RMSError)
-print('RMSE', net.network.evaluate(val_x, val_y, verbose = 1, ))
+print('RMSE', net.network.evaluate(val_x, val_y, verbose = 0, ))
 
 for _ in range(0):
     net.train(train_x,train_y, epochs = 2, verbose = 1,\
